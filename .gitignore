@@ -1,0 +1,7 @@
+.gradle/
+build/
+versions/*/.gradle/
+versions/*/build/
+versions/*/run/
+.inspect/
+runclient*.log

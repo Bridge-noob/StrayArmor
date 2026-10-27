@@ -1,0 +1,217 @@
+{
+  "enabled": true,
+  "debugCommandsEnabled": false,
+  "advancedMode": false,
+  "serverWhitelist": [
+    "stray.gg"
+  ],
+  "serverConfigs": {
+    "stray.gg": {
+      "categories": [
+        {
+          "id": "7c1a8e42-9f3b-4d6e-8a51-2b7c9d0e4f13",
+          "name": "<gradient:#00ff66:#00cc55:#b6ffcc:#00cc55:#00ff66>⋄༺⥼—–---–—⥽༻⋄ <b>Own</b> ⋄༺⥼—–---–—⥽༻⋄</gradient>",
+          "format": "<color:#00ff66><bold>OWN</bold></color:#00ff66> <gray>%Usernames% [<color:#00ff66>%Clans%</color:#00ff66>]",
+          "groupValues": {
+            "Clans": [
+              "Valor",
+              "Valor2"
+            ],
+            "Usernames": []
+          },
+          "matchPriority": [],
+          "serverFilters": []
+        },
+        {
+          "id": "e5e52ecc-fe8a-4f19-9ddb-46e0938b6cae",
+          "name": "<gradient:#6b4226:#d4a373:#f6e7d7:#d4a373:#6b4226>⋄༺⥼—–---–—⥽༻⋄ <b>Latte</b> ⋄༺⥼—–---–—⥽༻⋄</gradient>",
+          "format": "<color:#00ff00><bold>LATTE</bold></color:#00ff00> <gray>%Usernames% [<color:#00ff00>%Clans%</color:#00ff00>]",
+          "groupValues": {
+            "Clans": [
+              "Latte",
+              "Latte2"
+            ],
+            "Usernames": [
+              "Colusite",
+              "Kylaz",
+              "Yoe",
+              "Knucior"
+            ]
+          },
+          "matchPriority": [],
+          "serverFilters": []
+        },
+        {
+          "id": "6f131e77-b992-46fe-885d-4fb4ab5f9165",
+          "name": "<gradient:#0f8f2f:#1ed760:#b6ffcc:#1ed760:#0f8f2f>⋄༺⥼—–---–—⥽༻⋄ <b>Allied</b> ⋄༺⥼—–---–—⥽༻⋄</gradient>",
+          "format": "<color:#00ff00><bold>ALLY</bold></color:#00ff00> <gray>%Usernames% [<color:#00ff00>%Clans%</color:#00ff00>]",
+          "groupValues": {
+            "Clans": [
+              "REVOL",
+              "REVOLUTION",
+              "Serenity",
+              "Knight",
+              "Knight2",
+              "Knights",
+              "Knights2",
+              "LegionKnights",
+              "Absolut",
+              "101",
+              "Best",
+              "Sakura",
+              "FUN"
+            ],
+            "Usernames": [
+              "Washup",
+              "SnowyAvi",
+              "vhro",
+              "SimplyAPancake",
+              "_Valzz"
+            ]
+          },
+          "matchPriority": [],
+          "serverFilters": []
+        },
+        {
+          "id": "13e91bfb-3258-460a-bc4e-a4b3285bc379",
+          "name": "<gradient:#001a99:#003cff:#99bbff:#003cff:#001a99>⋄༺⥼—–---–—⥽༻⋄ <b>Elysium</b> ⋄༺⥼—–---–—⥽༻⋄</gradient>",
+          "format": "<color:#ff0000><bold>ENEMY</bold></color:#ff0000> <gray>%Usernames% [<color:#ff0000>%Clans%</color:#ff0000>]",
+          "groupValues": {
+            "Clans": [
+              "Elysium",
+              "ElysiumNA",
+              "ElysiumAS",
+              "Elysium2"
+            ]
+          },
+          "matchPriority": [],
+          "serverFilters": [
+            "eu"
+          ]
+        },
+        {
+          "id": "28a158e0-82e2-4f9d-83b6-38e38db810d6",
+          "name": "<gradient:#660000:#ff1a1a:#ff8080:#ff1a1a:#660000>⋄༺⥼—–---–—⥽༻⋄ <b>Enemy</b> ⋄༺⥼—–---–—⥽༻⋄</gradient>",
+          "format": "<color:#ff0000><bold>ENEMY</bold></color:#ff0000> <gray>%Usernames% [<color:#ff0000>%Clans%</color:#ff0000>]",
+          "groupValues": {
+            "Clans": [
+              "Aspect",
+              "ASPCT",
+              "Vaping",
+              "Forsaken",
+              "Resistance",
+              "Solace",
+              "Fate",
+              "Better",
+              "better",
+              "Frozen",
+              "Heaven",
+              "NightMares",
+              "Dense",
+              "Batman",
+              "Trace",
+              "SYNDICATE",
+              "Luminous",
+              "ETRNL",
+              "ETERNAL",
+              "Rage",
+              "Legion",
+              "Mythic",
+              "UBC",
+              "kindacold"
+            ],
+            "Usernames": [
+              "ndla"
+            ]
+          },
+          "matchPriority": [],
+          "serverFilters": []
+        },
+        {
+          "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+          "name": "<gradient:#888800:#ffff00:#ffffaa:#ffff00:#888800>⋄༺⥼—–---–—⥽༻⋄ <b>Neutral</b> ⋄༺⥼—–---–—⥽༻⋄</gradient>",
+          "format": "<color:#ffff55><bold>NEUTRAL</bold></color:#ffff55> <gray>%Usernames% [<color:#ffff55>%Clans%</color:#ffff55>]",
+          "groupValues": {
+            "Clans": [
+              "Compilance",
+              "Vanity",
+              "VanityAS",
+              "VLRSE",
+              "Valerse"
+            ]
+          },
+          "matchPriority": [],
+          "serverFilters": []
+        }
+      ],
+      "neutralFormat": "",
+      "noClanFormat": "",
+      "namePattern": "^(?<Usernames>\\S+)(?:\\s+\\[(?<Clans>[^\\]]+)\\])?$",
+      "uuidGroups": [
+        "Usernames"
+      ]
+    },
+    "__default__": {
+      "categories": [
+        {
+          "id": "b3e2f1a0-0c4d-4e5f-8a6b-7c8d9e0f1a2b",
+          "name": "<gradient:#00ff66:#00cc55:#b6ffcc:#00cc55:#00ff66>⋄༺⥼—–---–—⥽༻⋄ <b>Own</b> ⋄༺⥼—–---–—⥽༻⋄</gradient>",
+          "format": "<color:#00ff66><bold>OWN</bold></color:#00ff66> <gray>%Usernames% [<color:#00ff66>%Clans%</color:#00ff66>]",
+          "groupValues": {
+            "Clans": [
+              "Valor",
+              "Valor2"
+            ],
+            "Usernames": []
+          },
+          "matchPriority": [],
+          "serverFilters": []
+        },
+        {
+          "id": "ce370156-3007-40c8-8566-457316d857cc",
+          "name": "Allies",
+          "format": "<color:#00ff00><bold>ALLY</bold></color:#00ff00> <gray>%Usernames% [<color:#00ff00>%Clans%</color:#00ff00>]",
+          "groupValues": {
+            "Clans": [
+              "LegionKnights",
+              "Serenity",
+              "Absolut",
+              "101",
+              "Best"
+            ]
+          },
+          "matchPriority": [],
+          "serverFilters": []
+        },
+        {
+          "id": "41533f19-20ab-4896-9e30-80ad246d43d6",
+          "name": "Enemies",
+          "format": "<color:#ff0000><bold>ENEMY</bold></color:#ff0000> <gray>%Usernames% [<color:#ff0000>%Clans%</color:#ff0000>]",
+          "groupValues": {
+            "Clans": [
+              "Aspect",
+              "Vaping",
+              "Forsaken",
+              "Resistance",
+              "Solace",
+              "Elysium",
+              "Fate",
+              "Better",
+              "Frozen",
+              "Heaven",
+              "NightMares"
+            ]
+          },
+          "matchPriority": [],
+          "serverFilters": []
+        }
+      ],
+      "neutralFormat": "",
+      "noClanFormat": "",
+      "namePattern": "^(?<Usernames>\\S+)(?:\\s+\\[(?<Clans>[^\\]]+)\\])?$",
+      "uuidGroups": [
+        "Usernames"
+      ]
+    }
+  }
+}

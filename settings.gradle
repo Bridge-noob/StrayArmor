@@ -1,0 +1,15 @@
+pluginManagement {
+    repositories {
+        maven { url = "https://maven.fabricmc.net/" }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "StrayArmor"
+
+["1.21", "1.21.4", "1.21.8", "1.21.11", "26.1.2"].each { ver ->
+    def safeName = "mc-${ver}"
+    include ":${safeName}"
+    project(":${safeName}").projectDir = file("versions/${ver}")
+}

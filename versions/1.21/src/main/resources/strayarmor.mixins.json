@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "io.github.colusite.strayarmor.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "TextDisplayMixin",
+    "ModelPartMixin",
+    "HumanoidArmorLayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

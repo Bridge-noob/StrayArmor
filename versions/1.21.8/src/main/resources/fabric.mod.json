@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "strayarmor",
+  "version": "${version}",
+  "name": "StrayArmor",
+  "description": "Tints player armor by your StrayTags own/ally/enemy/neutral category.",
+  "authors": [
+    "StrayArmor"
+  ],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "io.github.colusite.strayarmor.StrayArmorClient"
+    ],
+    "modmenu": [
+      "io.github.colusite.strayarmor.client.modmenu.StrayArmorModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "strayarmor.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=21",
+    "fabric-api": ">=0.100.0"
+  },
+  "recommends": {
+    "straytags": "*",
+    "yet_another_config_lib_v3": ">=3.6",
+    "modmenu": "*"
+  }
+}
