@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "io.github.colusite.strayarmor.mixin",
+  "package": "io.github.bridge_noob.strayarmor.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
     "TextDisplayMixin",

@@ -11,10 +11,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "io.github.colusite.strayarmor.StrayArmorClient"
+      "io.github.bridge_noob.strayarmor.StrayArmorClient"
     ],
     "modmenu": [
-      "io.github.colusite.strayarmor.client.modmenu.StrayArmorModMenuIntegration"
+      "io.github.bridge_noob.strayarmor.client.modmenu.StrayArmorModMenuIntegration"
     ]
   },
   "mixins": [
