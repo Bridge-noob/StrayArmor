@@ -90,6 +90,7 @@ The screen edits the same `config/strayarmor.json`, grouped into **General** (en
 
 - `/strayarmor reload` - reload `strayarmor.json` and `straytags.json`, and ask StrayTags to reload.
 - `/strayarmor setup` - reinstall the bundled Valor StrayTags config, then reload.
+- `/strayarmor set enemy <color>` - set the enemy armor color (e.g. `/strayarmor set enemy #ff0000`), then apply immediately. Same subcommands exist for `own`, `ally`, and `neutral`: `/strayarmor set <own|ally|enemy|neutral> <color>`. An empty color clears that side's tint.
 
 ## How matching works
 
