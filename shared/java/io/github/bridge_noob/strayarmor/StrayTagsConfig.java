@@ -64,6 +64,113 @@ public final class StrayTagsConfig {
         }
     }
 
+    /**
+     * Adds a clan to the first configured category that maps to {@code side}
+     * (own/ally/enemy/neutral) and persists the updated StrayTags config.
+     */
+    public static boolean addClan(String serverAddress, ArmorSide side, List<String> newClans) {
+        Data current = data;
+        if (current == null) return false;
+        ServerData server = current.getServerConfig(serverAddress);
+        if (server == null) return false;
+
+        List<CategoryData> categories = categories(server);
+        CategoryData target = null;
+        for (CategoryData category : categories) {
+            if (sideOf(category) == side) {
+                target = category;
+                break;
+            }
+        }
+        if (target == null || target.groupValues == null || target.groupValues.isEmpty()) return false;
+
+        List<String> groupList = null;
+        for (Map.Entry<String, List<String>> entry : target.groupValues.entrySet()) {
+            if (entry.getValue() != null && !entry.getValue().isEmpty()) {
+                groupList = entry.getValue();
+                break;
+            }
+        }
+        if (groupList == null) return false;
+
+        boolean added = false;
+        for (String clan : newClans) {
+            if (clan == null || clan.isBlank()) continue;
+            boolean exists = false;
+            for (String existing : groupList) {
+                if (existing != null && existing.equalsIgnoreCase(clan)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                groupList.add(clan);
+                added = true;
+            }
+        }
+        if (!added) return false;
+
+        save();
+        return true;
+    }
+
+    /**
+     * Renames (edits) a clan inside the first configured category that maps to
+     * {@code side} (own/ally/enemy/neutral) and persists the updated StrayTags config.
+     */
+    public static boolean editClan(String serverAddress, ArmorSide side, String oldClan, String newClan) {
+        Data current = data;
+        if (current == null) return false;
+        ServerData server = current.getServerConfig(serverAddress);
+        if (server == null) return false;
+
+        List<CategoryData> categories = categories(server);
+        CategoryData target = null;
+        for (CategoryData category : categories) {
+            if (sideOf(category) == side) {
+                target = category;
+                break;
+            }
+        }
+        if (target == null || target.groupValues == null || target.groupValues.isEmpty()) return false;
+
+        List<String> groupList = null;
+        for (Map.Entry<String, List<String>> entry : target.groupValues.entrySet()) {
+            if (entry.getValue() != null && !entry.getValue().isEmpty()) {
+                groupList = entry.getValue();
+                break;
+            }
+        }
+        if (groupList == null) return false;
+
+        String cleanedOld = oldClan == null ? "" : oldClan.trim();
+        String cleanedNew = newClan == null ? "" : newClan.trim();
+        int index = -1;
+        for (int i = 0; i < groupList.size(); i++) {
+            if (groupList.get(i) != null && groupList.get(i).equalsIgnoreCase(cleanedOld)) {
+                index = i;
+                break;
+            }
+        }
+        if (index < 0) return false;
+        groupList.set(index, cleanedNew);
+        save();
+        return true;
+    }
+
+    /** Writes the currently loaded StrayTags data back to config/straytags.json. */
+    public static void save() {
+        Data current = data;
+        if (current == null) return;
+        try {
+            Path path = FabricLoader.getInstance().getConfigDir().resolve("straytags.json");
+            Files.createDirectories(path.getParent());
+            Files.writeString(path, GSON.toJson(current), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            LOGGER.warn("[StrayArmor] Failed to save straytags.json", e);
+        }
+    }
+
     public static boolean isActive(String serverAddress) {
         Data current = data;
         return current != null

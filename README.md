@@ -90,7 +90,11 @@ The screen edits the same `config/strayarmor.json`, grouped into **General** (en
 
 - `/strayarmor reload` - reload `strayarmor.json` and `straytags.json`, and ask StrayTags to reload.
 - `/strayarmor setup` - reinstall the bundled Valor StrayTags config, then reload.
-- `/strayarmor set enemy <color>` - set the enemy armor color (e.g. `/strayarmor set enemy #ff0000`), then apply immediately. Same subcommands exist for `own`, `ally`, and `neutral`: `/strayarmor set <own|ally|enemy|neutral> <color>`. An empty color clears that side's tint.
+- `/strayarmor set <own|ally|enemy|neutral> <color>` - set the armor tint color for a side (e.g. `/strayarmor set enemy #ff0000`). Empty color clears the tint.
+- `/strayarmor clan add <own|ally|enemy|neutral> <clans>` - add one or more clan names to a side's list (comma separated, e.g. `/strayarmor clan add enemy Bandit,Cult`).
+- `/strayarmor clan edit <own|ally|enemy|neutral> <old> <new>` - rename a clan in a side's list (e.g. `/strayarmor clan edit enemy Bandit Bravado`).
+
+The `/strayarmor set` and `/strayarmor clan` commands use the server address from your current server, and the changed entries take effect after `/strayarmor reload`.
 
 ## How matching works
 
