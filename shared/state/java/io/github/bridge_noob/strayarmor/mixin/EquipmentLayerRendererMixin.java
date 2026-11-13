@@ -24,18 +24,4 @@ public abstract class EquipmentLayerRendererMixin {
                     + "Lcom/mojang/blaze3d/vertex/PoseStack;"
                     + "Lnet/minecraft/client/renderer/MultiBufferSource;"
                     + "ILnet/minecraft/resources/ResourceLocation;)V";
-
-    private static final String ARMOR_CUTOUT =
-            "Lnet/minecraft/client/renderer/RenderType;armorCutoutNoCull("
-                    + "Lnet/minecraft/resources/ResourceLocation;)"
-                    + "Lnet/minecraft/client/renderer/RenderType;";
-
-    @Redirect(method = RENDER_LAYERS, at = @At(value = "INVOKE", target = ARMOR_CUTOUT))
-    private RenderType strayarmor$solidTexture(ResourceLocation texture) {
-        if (TintContext.current() != 0 && StrayArmorConfigManager.isSolidMode()) {
-            return RenderType.armorCutoutNoCull(
-                    ResourceLocation.fromNamespaceAndPath("strayarmor", "textures/white.png"));
-        }
-        return RenderType.armorCutoutNoCull(texture);
-    }
 }

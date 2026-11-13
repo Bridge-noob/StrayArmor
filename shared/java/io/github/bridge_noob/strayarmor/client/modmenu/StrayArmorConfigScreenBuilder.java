@@ -68,7 +68,6 @@ public class StrayArmorConfigScreenBuilder {
                         "How strong the tint is and how it blends with the armor texture.")))
                 .collapsed(false);
         appearance.option(strengthOption(cfg));
-        appearance.option(modeOption(cfg));
 
         ConfigCategory general = ConfigCategory.createBuilder()
                 .name(Component.literal("General"))
@@ -182,21 +181,6 @@ public class StrayArmorConfigScreenBuilder {
                         .range(Float.valueOf(0F), Float.valueOf(1F))
                         .step(Float.valueOf(0.05F))
                         .formatValue(ValueFormatters.percent(0)))
-                .build();
-    }
-
-    private static Option<String> modeOption(StrayArmorConfig cfg) {
-        return Option.<String>createBuilder()
-                .name(Component.literal("Tint Mode"))
-                .description(OptionDescription.of(Component.literal(
-                        "vivid (default): pure saturated color, texture shading still shows. "
-                                + "solid: flat color, no texture detail. "
-                                + "multiply: color mixed into the texture.")))
-                .binding(StrayArmorConfig.DEFAULT_TINT_MODE,
-                        () -> cfg.tintMode, v -> cfg.tintMode = v)
-                .controller(o -> DropdownStringControllerBuilder.create(o)
-                        .values("vivid", "solid", "multiply")
-                        .allowAnyValue(true))
                 .build();
     }
 

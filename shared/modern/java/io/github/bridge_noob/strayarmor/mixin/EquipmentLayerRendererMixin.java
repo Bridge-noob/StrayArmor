@@ -43,22 +43,6 @@ public abstract class EquipmentLayerRendererMixin {
             + "I"
             + "Lnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V";
 
-    private static final String ARMOR_CUTOUT =
-            "Lnet/minecraft/client/renderer/rendertype/RenderTypes;armorCutoutNoCull("
-                    + "Lnet/minecraft/resources/Identifier;)"
-                    + "Lnet/minecraft/client/renderer/rendertype/RenderType;";
-
-    @Redirect(
-            method = RENDER_LAYERS,
-            at = @At(value = "INVOKE", target = ARMOR_CUTOUT))
-    private RenderType strayarmor$solidTexture(Identifier texture) {
-        if (TintContext.current() != 0 && StrayArmorConfigManager.isSolidMode()) {
-            return RenderTypes.armorCutoutNoCull(
-                    Identifier.fromNamespaceAndPath("strayarmor", "textures/white.png"));
-        }
-        return RenderTypes.armorCutoutNoCull(texture);
-    }
-
     @Redirect(
             method = RENDER_LAYERS,
             at = @At(value = "INVOKE", target = SUBMIT_MODEL_OLD))
