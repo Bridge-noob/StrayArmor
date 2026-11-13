@@ -32,16 +32,16 @@ public abstract class EquipmentLayerRendererMixin {
                     + "Lnet/minecraft/client/renderer/SubmitNodeCollector;"
                     + "ILnet/minecraft/resources/Identifier;II)V";
 
-    private static final String SUBMIT_MODEL =
+    private static final String SUBMIT_MODEL_OLD =
             "Lnet/minecraft/client/renderer/OrderedSubmitNodeCollector;"
-                    + "submitModel(Lnet/minecraft/client/model/Model;"
-                    + "Ljava/lang/Object;"
-                    + "Lcom/mojang/blaze3d/vertex/PoseStack;"
-                    + "Lnet/minecraft/client/renderer/rendertype/RenderType;"
-                    + "III"
-                    + "Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;"
-                    + "I"
-                    + "Lnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V";
+            + "submitModel(Lnet/minecraft/client/model/Model;"
+            + "Ljava/lang/Object;"
+            + "Lcom/mojang/blaze3d/vertex/PoseStack;"
+            + "Lnet/minecraft/client/renderer/rendertype/RenderType;"
+            + "III"
+            + "Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;"
+            + "I"
+            + "Lnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V";
 
     private static final String ARMOR_CUTOUT =
             "Lnet/minecraft/client/renderer/rendertype/RenderTypes;armorCutoutNoCull("
@@ -61,7 +61,8 @@ public abstract class EquipmentLayerRendererMixin {
 
     @Redirect(
             method = RENDER_LAYERS,
-            at = @At(value = "INVOKE", target = SUBMIT_MODEL))
+            at = @At(value = "INVOKE", target = SUBMIT_MODEL_OLD))
+    @SuppressWarnings("unchecked")
     private void strayarmor$tintSubmittedModel(
             OrderedSubmitNodeCollector collector,
             Model<?> model,
@@ -74,7 +75,7 @@ public abstract class EquipmentLayerRendererMixin {
             TextureAtlasSprite sprite,
             int outlineColor,
             ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
-        collector.submitModel((Model) model, state, poseStack, renderType, light, overlay,
+        collector.submitModel((Model<Object>) model, state, poseStack, renderType, light, overlay,
                 TintContext.apply(color), sprite, outlineColor, crumblingOverlay);
     }
 }

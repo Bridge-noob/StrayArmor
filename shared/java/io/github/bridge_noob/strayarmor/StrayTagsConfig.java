@@ -69,28 +69,7 @@ public final class StrayTagsConfig {
      * (own/ally/enemy/neutral) and persists the updated StrayTags config.
      */
     public static boolean addClan(String serverAddress, ArmorSide side, List<String> newClans) {
-        Data current = data;
-        if (current == null) return false;
-        ServerData server = current.getServerConfig(serverAddress);
-        if (server == null) return false;
-
-        List<CategoryData> categories = categories(server);
-        CategoryData target = null;
-        for (CategoryData category : categories) {
-            if (sideOf(category) == side) {
-                target = category;
-                break;
-            }
-        }
-        if (target == null || target.groupValues == null || target.groupValues.isEmpty()) return false;
-
-        List<String> groupList = null;
-        for (Map.Entry<String, List<String>> entry : target.groupValues.entrySet()) {
-            if (entry.getValue() != null && !entry.getValue().isEmpty()) {
-                groupList = entry.getValue();
-                break;
-            }
-        }
+        List<String> groupList = firstGroupList(serverAddress, side);
         if (groupList == null) return false;
 
         boolean added = false;
@@ -119,28 +98,7 @@ public final class StrayTagsConfig {
      * {@code side} (own/ally/enemy/neutral) and persists the updated StrayTags config.
      */
     public static boolean editClan(String serverAddress, ArmorSide side, String oldClan, String newClan) {
-        Data current = data;
-        if (current == null) return false;
-        ServerData server = current.getServerConfig(serverAddress);
-        if (server == null) return false;
-
-        List<CategoryData> categories = categories(server);
-        CategoryData target = null;
-        for (CategoryData category : categories) {
-            if (sideOf(category) == side) {
-                target = category;
-                break;
-            }
-        }
-        if (target == null || target.groupValues == null || target.groupValues.isEmpty()) return false;
-
-        List<String> groupList = null;
-        for (Map.Entry<String, List<String>> entry : target.groupValues.entrySet()) {
-            if (entry.getValue() != null && !entry.getValue().isEmpty()) {
-                groupList = entry.getValue();
-                break;
-            }
-        }
+        List<String> groupList = firstGroupList(serverAddress, side);
         if (groupList == null) return false;
 
         String cleanedOld = oldClan == null ? "" : oldClan.trim();
@@ -156,6 +114,23 @@ public final class StrayTagsConfig {
         groupList.set(index, cleanedNew);
         save();
         return true;
+    }
+
+    /** Returns the first non-empty group list of the category mapped to {@code side}, or null. */
+    private static List<String> firstGroupList(String serverAddress, ArmorSide side) {
+        Data current = data;
+        if (current == null) return null;
+        ServerData server = current.getServerConfig(serverAddress);
+        if (server == null) return null;
+
+        for (CategoryData category : categories(server)) {
+            if (sideOf(category) != side) continue;
+            if (category.groupValues == null) continue;
+            for (List<String> values : category.groupValues.values()) {
+                if (values != null && !values.isEmpty()) return values;
+            }
+        }
+        return null;
     }
 
     /** Writes the currently loaded StrayTags data back to config/straytags.json. */

@@ -4,9 +4,7 @@
   "version": "${version}",
   "name": "StrayArmor",
   "description": "Tints player armor by your StrayTags own/ally/enemy/neutral category.",
-  "authors": [
-    "StrayArmor"
-  ],
+  "authors": ["Bridge-noob"],
   "license": "MIT",
   "environment": "client",
   "entrypoints": {
@@ -32,3 +30,4 @@
     "modmenu": "*"
   }
 }
+

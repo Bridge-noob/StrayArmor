@@ -1,6 +1,6 @@
 subprojects {
-    group = "io.github.colusite"
-    version = "0.1.0"
+    group = "io.github.bridge_noob"
+    version = "1.0.0"
 }
 
 tasks.register("collectJars", Copy) {

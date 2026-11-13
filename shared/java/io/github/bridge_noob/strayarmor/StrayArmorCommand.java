@@ -183,10 +183,15 @@ public final class StrayArmorCommand {
                 if (!cleaned.isEmpty()) names.add(cleaned);
             }
         }
+        if (names.isEmpty()) {
+            source.sendFeedback(Component.literal(
+                    "\u00a7c[StrayArmor] Usage: /strayarmor clan add <own|ally|enemy|neutral> <clan,clan,...>"));
+            return 0;
+        }
         boolean ok = StrayTagsConfig.addClan(serverAddress, side, names);
         source.sendFeedback(Component.literal(ok
-                ? "\u00a7a[StrayArmor] Added clan(s) to the " + side + " list"
-                : "\u00a7c[StrayArmor] No clan added (no matching category?)"));
+                ? "\u00a7a[StrayArmor] Added " + String.join(", ", names) + " to the " + sideName(side) + " list"
+                : "\u00a7c[StrayArmor] Could not add clans (no matching " + sideName(side) + " category on this server?)"));
         StrayArmorConfigManager.reload();
         ConfigInstaller.reloadStrayTags();
         return ok ? 1 : 0;
@@ -194,10 +199,15 @@ public final class StrayArmorCommand {
 
     private static int editClan(FabricClientCommandSource source, ArmorSide side, String oldClan, String newClan) {
         String serverAddress = StrayArmorClient.currentServerAddress();
+        if (oldClan == null || oldClan.isBlank() || newClan == null || newClan.isBlank()) {
+            source.sendFeedback(Component.literal(
+                    "\u00a7c[StrayArmor] Usage: /strayarmor clan edit <own|ally|enemy|neutral> <old> <new>"));
+            return 0;
+        }
         boolean ok = StrayTagsConfig.editClan(serverAddress, side, oldClan, newClan);
         source.sendFeedback(Component.literal(ok
-                ? "\u00a7a[StrayArmor] Renamed clan in the " + side + " list"
-                : "\u00a7c[StrayArmor] No clan edited (not found?)"));
+                ? "\u00a7a[StrayArmor] Renamed " + oldClan + " to " + newClan + " in the " + sideName(side) + " list"
+                : "\u00a7c[StrayArmor] Could not rename (clan not found in the " + sideName(side) + " list?)"));
         StrayArmorConfigManager.reload();
         ConfigInstaller.reloadStrayTags();
         return ok ? 1 : 0;
@@ -205,6 +215,11 @@ public final class StrayArmorCommand {
 
     private static int setColor(FabricClientCommandSource source, ArmorSide side, String color) {
         String value = color == null ? "" : color.trim();
+        if (!value.isEmpty() && !value.matches("^#?([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$")) {
+            source.sendFeedback(Component.literal(
+                    "\u00a7c[StrayArmor] Invalid color '" + value + "' - use #RRGGBB or #AARRGGBB"));
+            return 0;
+        }
         StrayArmorConfig cfg = StrayArmorConfigManager.config();
         switch (side) {
             case OWN -> cfg.ownColor = value;
@@ -214,7 +229,18 @@ public final class StrayArmorCommand {
         }
         StrayArmorConfigManager.save();
         StrayArmorConfigManager.recompute();
-        source.sendFeedback(Component.literal("\u00a7a[StrayArmor] Set " + side + " color to " + value));
+        source.sendFeedback(Component.literal("\u00a7a[StrayArmor] Set " + sideName(side)
+                + " color to " + (value.isEmpty() ? "none" : value)));
         return 1;
+    }
+
+    private static String sideName(ArmorSide side) {
+        return switch (side) {
+            case OWN -> "own";
+            case ALLY -> "ally";
+            case ENEMY -> "enemy";
+            case NEUTRAL -> "neutral";
+            case NONE -> "none";
+        };
     }
 }

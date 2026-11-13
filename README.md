@@ -1,6 +1,6 @@
 # StrayArmor
 
-![Minecraft](https://img.shields.io/badge/minecraft-1.21%20to%201.21.11%20%2B%20126.1.2-blue)
+![Minecraft](https://img.shields.io/badge/minecraft-1.21%20to%201.21.11%20%2B%2026.1.2%20%2B%2026.2-blue)
 ![Fabric](https://img.shields.io/badge/fabric-loader%20%7C%20fabric%20api-orange)
 ![ModMenu](https://img.shields.io/badge/modmenu-supported-green)
 ![YACL](https://img.shields.io/badge/yet%20another%20config%20lib-blue)
@@ -13,14 +13,14 @@ A client-side Fabric mod that tints player armor by the StrayTags category of th
 - **Neutral** - uncolored (normal armor) by default
 - Anything that does not map to one of those groups is left alone.
 
-StrayArmor reads `config/straytags.json` directly, so it does not need a compile-time dependency on StrayTags. It works with StrayTags 1.21, 1.21.4, 1.21.8, 1.21.11, and 26.1.2, and is built for the same five versions.
+StrayArmor reads `config/straytags.json` directly, so it does not need a compile-time dependency on StrayTags. It works with StrayTags 1.21, 1.21.4, 1.21.8, 1.21.11, 26.1.2, and 26.2, and is built for the same six versions.
 
 ## Install
 
 1. Install Fabric Loader and Fabric API for your Minecraft version.
 2. Install StrayTags.
 3. Install ModMenu and YetAnother Config Lib (YACL) for the in-game config screen.
-4. Drop the matching `strayarmor-<minecraft version>-0.1.0.jar` into `mods/`.
+4. Drop the matching `strayarmor-<minecraft version>-1.0.0.jar` into `mods/`.
 5. Launch the game once. The mod writes its own config and installs the bundled Valor StrayTags config (see below).
 
 ## Valor config install
@@ -74,7 +74,7 @@ The same code is available in [`valor-import.txt`](valor-import.txt). A StrayTag
 - `tintStrength` is `0` (no color) to `1` (full color). The default is `1.0`, which uses the exact configured color. Lower values blend the tint toward white so armor shading stays visible.
 - `tintMode` is how the color is applied: `vivid` (default; pure saturated color, texture shading still shows), `solid` (flat color, no texture detail), or `multiply` (color multiplied into the texture).
 - Leave `neutralColor` empty to keep neutral/clanless players on normal, uncolored armor. Set it to a hex color to tint them.
-- Configs from older StrayArmor builds are upgraded once to `tintStrength: 1.0`; after that, edits to the value are kept.
+- Configs from older StrayArmor builds are upgraded once to `tintStrength: 1.0` and `tintMode: "vivid"`; after that, edits to the values are kept.
 - Reload after editing with `/strayarmor reload`.
 
 ## ModMenu config screen
@@ -106,11 +106,11 @@ For each armor-wearing player, StrayArmor:
 4. Falls back to the local player being Own, and to Neutral when an unlisted player still has a clan tag.
 5. If the close-range tag drops the clan (or a display is missing), checks the tab-list name and keeps the last known side while the shorter tag still matches that player.
 
-The actual tint is applied only while the vanilla `HumanoidArmorLayer` is drawing, so skin, capes, and held items are not recolored. On 1.21.11 and 26.1.2 armor is submitted as deferred model nodes, so the tint is baked into the submitted node color.
+The actual tint is applied only while the vanilla `HumanoidArmorLayer` is drawing, so skin, capes, and held items are not recolored. On 1.21.11, 26.1.2, and 26.2 armor is submitted as deferred model nodes, so the tint is baked into the submitted node color.
 
 ## Build
 
-StrayArmor uses Java 25 for the Gradle build (the 26.1.2 subproject needs it) and targets Java 21 bytecode for 1.21-1.21.11. Run Gradle with a JDK 25, for example:
+StrayArmor uses Java 25 for the Gradle build (the 26.1.2 and 26.2 subprojects need it) and targets Java 21 bytecode for 1.21-1.21.11. Run Gradle with a JDK 25, for example:
 
 ```
 JAVA_HOME="/path/to/jdk-25" ./gradlew buildAll
