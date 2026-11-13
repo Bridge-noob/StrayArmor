@@ -40,7 +40,7 @@ public abstract class HumanoidArmorLayerMixin {
                                        LivingEntity entity, float f, float g, float h,
                                        float j, float k, float l, CallbackInfo ci) {
         int tint = entity instanceof Player player ? StrayArmorClient.tintFor(player) : 0;
-        TintContext.push(tint);
+        TintContext.push(tint, StrayArmorConfigManager.isVividMode() || StrayArmorConfigManager.isSolidMode());
     }
 
     @Inject(method = RENDER, at = @At("RETURN"))

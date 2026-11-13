@@ -5,11 +5,22 @@ public final class TintContext {
 
     private static final ThreadLocal<int[]> STACK = ThreadLocal.withInitial(() -> new int[8]);
     private static final ThreadLocal<Integer> DEPTH = ThreadLocal.withInitial(() -> 0);
+    private static final ThreadLocal<Boolean> REPLACE_BASE = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
     private TintContext() {
     }
 
     public static void push(int tint) {
+        push(tint, false);
+    }
+
+    /**
+     * Pushes a render tint. When {@code replaceBase} is true the tint is treated
+     * as a final color (vivid/solid) and overwrites the base color; when false it
+     * is a tint factor that gets multiplied into the base (multiply mode).
+     */
+    public static void push(int tint, boolean replaceBase) {
+        REPLACE_BASE.set(replaceBase);
         int depth = DEPTH.get();
         int[] stack = STACK.get();
         if (depth >= stack.length) {
@@ -23,8 +34,8 @@ public final class TintContext {
     }
 
     public static void pop() {
-        int depth = DEPTH.get();
-        if (depth > 0) DEPTH.set(depth - 1);
+        DEPTH.set(Math.max(0, DEPTH.get() - 1));
+        REPLACE_BASE.set(false);
     }
 
     public static int current() {
@@ -34,6 +45,8 @@ public final class TintContext {
 
     public static int apply(int baseColor) {
         int tint = current();
-        return tint == 0 ? baseColor : ColorUtil.multiply(baseColor, tint);
+        if (tint == 0) return baseColor;
+        if (REPLACE_BASE.get()) return tint;
+        return ColorUtil.multiply(baseColor, tint);
     }
 }

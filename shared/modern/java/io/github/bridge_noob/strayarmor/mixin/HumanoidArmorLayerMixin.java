@@ -2,6 +2,7 @@ package io.github.bridge_noob.strayarmor.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.bridge_noob.strayarmor.StrayArmorClient;
+import io.github.bridge_noob.strayarmor.StrayArmorConfigManager;
 import io.github.bridge_noob.strayarmor.TintContext;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
@@ -26,7 +27,7 @@ public abstract class HumanoidArmorLayerMixin {
         int tint = state instanceof AvatarRenderState avatar
                 ? StrayArmorClient.tintForState(avatar.id, null)
                 : 0;
-        TintContext.push(tint);
+        TintContext.push(tint, StrayArmorConfigManager.isVividMode() || StrayArmorConfigManager.isSolidMode());
     }
 
     @Inject(method = SUBMIT, at = @At("RETURN"))

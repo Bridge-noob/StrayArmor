@@ -78,7 +78,13 @@ public final class StrayArmorConfigManager {
         return true;
     }
 
-    /** True when armor should be drawn as a flat color instead of textured. */
+    /** True when the tint is a final color to overwrite the base (vivid or solid). */
+    public static boolean isVividMode() {
+        StrayArmorConfig cfg = config;
+        return cfg == null || "vivid".equalsIgnoreCase(cfg.tintMode);
+    }
+
+    /** True when the armor should be drawn as a flat color instead of textured. */
     public static boolean isSolidMode() {
         StrayArmorConfig cfg = config;
         return cfg != null && "solid".equalsIgnoreCase(cfg.tintMode);
