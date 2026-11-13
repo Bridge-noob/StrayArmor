@@ -7,7 +7,7 @@ public class StrayArmorConfig {
 
     public static final String DEFAULT_OWN_COLOR = "#00FF66";
     public static final String DEFAULT_ALLY_COLOR = "#3BA7FF";
-    public static final String DEFAULT_ENEMY_COLOR = "#FF3B3B";
+    public static final String DEFAULT_ENEMY_COLOR = "#FF0000";
     public static final String DEFAULT_NEUTRAL_COLOR = "";
     public static final float DEFAULT_TINT_STRENGTH = 1.0F;
     public static final String DEFAULT_TINT_MODE = "vivid";

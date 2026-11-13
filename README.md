@@ -62,7 +62,7 @@ The same code is available in [`valor-import.txt`](valor-import.txt). A StrayTag
   "enabled": true,
   "ownColor": "#00FF66",
   "allyColor": "#3BA7FF",
-  "enemyColor": "#FF3B3B",
+  "enemyColor": "#FF0000",
   "neutralColor": "",
   "tintMode": "vivid",
   "tintStrength": 1.0,
