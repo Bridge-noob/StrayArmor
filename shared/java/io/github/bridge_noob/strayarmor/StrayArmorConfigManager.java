@@ -59,12 +59,21 @@ public final class StrayArmorConfigManager {
 
     /**
      * Old configs used 0.8 strength, which washes the color toward white. Force
-     * the new full-strength default once, then leave the user's value alone.
+     * the new full-strength default once (pre-v5 configs), then leave the
+     * user's value alone. v6 adds the per-side toggles, which default to on.
      */
     private static boolean upgrade(StrayArmorConfig cfg) {
         if (cfg.configVersion >= StrayArmorConfig.CURRENT_VERSION) return false;
-        cfg.tintStrength = 1.0F;
-        if (cfg.configVersion < 5) cfg.tintMode = "vivid";
+        if (cfg.configVersion < 5) {
+            cfg.tintStrength = 1.0F;
+            cfg.tintMode = "vivid";
+        }
+        if (cfg.configVersion < 6) {
+            cfg.tintOwn = true;
+            cfg.tintAlly = true;
+            cfg.tintEnemy = true;
+            cfg.tintNeutral = true;
+        }
         cfg.configVersion = StrayArmorConfig.CURRENT_VERSION;
         return true;
     }
@@ -97,7 +106,7 @@ public final class StrayArmorConfigManager {
     }
 
     public static int tint(ArmorSide side) {
-        if (side == null) return 0;
+        if (side == null || !isSideEnabled(side)) return 0;
         return switch (side) {
             case OWN -> ownTint;
             case ALLY -> allyTint;
@@ -105,6 +114,26 @@ public final class StrayArmorConfigManager {
             case NEUTRAL -> neutralTint;
             default -> 0;
         };
+    }
+
+    /** True when the given side's tint is switched on. */
+    public static boolean isSideEnabled(ArmorSide side) {
+        StrayArmorConfig cfg = config;
+        if (cfg == null) return false;
+        return switch (side) {
+            case OWN -> cfg.tintOwn;
+            case ALLY -> cfg.tintAlly;
+            case ENEMY -> cfg.tintEnemy;
+            case NEUTRAL -> cfg.tintNeutral;
+            default -> false;
+        };
+    }
+
+    /** Restores the bundled defaults and persists them. */
+    public static void resetToDefaults() {
+        config = defaults();
+        save();
+        recompute();
     }
 
     public static void maybeInstallStrayTagsConfig() {

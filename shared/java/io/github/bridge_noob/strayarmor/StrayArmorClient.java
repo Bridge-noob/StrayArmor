@@ -40,23 +40,6 @@ public class StrayArmorClient implements ClientModInitializer {
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> LAST_SIDES.clear());
         LOGGER.info("[StrayArmor] Initialized (armor tinting {})",
                 StrayArmorConfigManager.config().enabled ? "enabled" : "disabled");
-
-        // TEMP-MIXIN-CHECK (removed after verification)
-        loadTarget("net.minecraft.client.model.geom.ModelPart");
-        loadTarget("net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer");
-        loadTarget("net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer");
-        loadTarget("net.minecraft.world.entity.Display$TextDisplay");
-        LOGGER.info("[StrayArmor] TEMP mixin targets loaded");
-    }
-
-    private static void loadTarget(String className) {
-        try {
-            Class.forName(className);
-        } catch (ClassNotFoundException expected) {
-            // Not present on this Minecraft version.
-        } catch (Throwable t) {
-            LOGGER.error("[StrayArmor] TEMP mixin target FAILED: {}", className, t);
-        }
     }
 
     public static int tintFor(Player player) {

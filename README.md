@@ -1,6 +1,7 @@
 # StrayArmor
 
 ![Minecraft](https://img.shields.io/badge/minecraft-1.21%20to%201.21.11%20%2B%2026.1.2%20%2B%2026.2-blue)
+![CI](https://github.com/Bridge-noob/StrayArmor/actions/workflows/ci.yml/badge.svg)
 ![Fabric](https://img.shields.io/badge/fabric-loader%20%7C%20fabric%20api-orange)
 ![ModMenu](https://img.shields.io/badge/modmenu-supported-green)
 ![YACL](https://img.shields.io/badge/yet%20another%20config%20lib-blue)
@@ -20,7 +21,7 @@ StrayArmor reads `config/straytags.json` directly, so it does not need a compile
 1. Install Fabric Loader and Fabric API for your Minecraft version.
 2. Install StrayTags.
 3. Install ModMenu and YetAnother Config Lib (YACL) for the in-game config screen.
-4. Drop the matching `strayarmor-<minecraft version>-1.0.0.jar` into `mods/`.
+4. Drop the matching `strayarmor-<minecraft version>-1.1.0.jar` into `mods/`.
 5. Launch the game once. The mod writes its own config and installs the bundled Valor StrayTags config (see below).
 
 ## Valor config install
@@ -65,6 +66,10 @@ The same code is available in [`valor-import.txt`](valor-import.txt). A StrayTag
   "neutralColor": "",
   "tintMode": "vivid",
   "tintStrength": 1.0,
+  "tintOwn": true,
+  "tintAlly": true,
+  "tintEnemy": true,
+  "tintNeutral": true,
   "installStrayTagsConfig": true,
   "strayTagsConfigInstalled": true
 }
@@ -74,6 +79,7 @@ The same code is available in [`valor-import.txt`](valor-import.txt). A StrayTag
 - `tintStrength` is `0` (no color) to `1` (full color). The default is `1.0`, which uses the exact configured color. Lower values blend the tint toward white so armor shading stays visible.
 - `tintMode` is how the color is applied: `vivid` (default; pure saturated color, texture shading still shows), `solid` (flat color, no texture detail), or `multiply` (color multiplied into the texture).
 - Leave `neutralColor` empty to keep neutral/clanless players on normal, uncolored armor. Set it to a hex color to tint them.
+- The `tintOwn`/`tintAlly`/`tintEnemy`/`tintNeutral` switches (also in the config screen) turn a side's tint off while keeping its color, so you can re-enable it later without re-entering anything.
 - Configs from older StrayArmor builds are upgraded once to `tintStrength: 1.0` and `tintMode: "vivid"`; after that, edits to the values are kept.
 - Reload after editing with `/strayarmor reload`.
 
@@ -84,11 +90,12 @@ StrayArmor ships a ModMenu config screen (requires ModMenu and YetAnother Config
 - Install the **ModMenu** and **YetAnother Config Lib (YACL)** mods.
 - In-game: ModMenu → StrayArmor.
 
-The screen edits the same `config/strayarmor.json`, grouped into **General** (enabled, install StrayTags config) and **Armor Colors** (own/ally/enemy/neutral colors, tint strength slider, tint mode dropdown). Saving writes the config and re-applies the tints immediately.
+The screen edits the same `config/strayarmor.json`, grouped into **General** (enabled, install StrayTags config) and **Armor Colors** (side colors, per-side switches, tint strength slider, tint mode dropdown). Every option has a reset button that restores its default. Colors are checked when you press Save: an invalid color keeps its old value and you get a message in chat instead of a broken config.
 
 ## Commands
 
 - `/strayarmor reload` - reload `strayarmor.json` and `straytags.json`, and ask StrayTags to reload.
+- `/strayarmor reset` - restore all StrayArmor settings to their defaults.
 - `/strayarmor setup` - reinstall the bundled Valor StrayTags config, then reload.
 - `/strayarmor set <own|ally|enemy|neutral> <color>` - set the armor tint color for a side (e.g. `/strayarmor set enemy #ff0000`). Empty color clears the tint.
 - `/strayarmor clan add <own|ally|enemy|neutral> <clans>` - add one or more clan names to a side's list (comma separated, e.g. `/strayarmor clan add enemy Bandit,Cult`).
@@ -123,3 +130,7 @@ $env:JAVA_HOME="C:\Program Files\Java\jdk-25.0.3"; .\gradlew.bat buildAll
 ```
 
 The collected jars are written to `build/libs/`. Per-version jars are in `versions/<version>/build/libs/`.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions, the source layout, and how to add another Minecraft version. Issues and pull requests are welcome.

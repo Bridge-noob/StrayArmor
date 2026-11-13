@@ -29,6 +29,14 @@ public final class StrayArmorCommand {
                         return 1;
                     }));
 
+            root.then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("reset")
+                    .executes(context -> {
+                        StrayArmorConfigManager.resetToDefaults();
+                        context.getSource().sendFeedback(
+                                Component.literal("\u00a7a[StrayArmor] Config reset to defaults"));
+                        return 1;
+                    }));
+
             root.then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("setup")
                     .executes(context -> {
                         boolean installed = ConfigInstaller.install();
@@ -214,10 +222,10 @@ public final class StrayArmorCommand {
     }
 
     private static int setColor(FabricClientCommandSource source, ArmorSide side, String color) {
-        String value = color == null ? "" : color.trim();
-        if (!value.isEmpty() && !value.matches("^#?([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$")) {
+        String value = StrayArmorConfig.normalizeColor(color);
+        if (value == null) {
             source.sendFeedback(Component.literal(
-                    "\u00a7c[StrayArmor] Invalid color '" + value + "' - use #RRGGBB or #AARRGGBB"));
+                    "\u00a7c[StrayArmor] Invalid color '" + color + "' - use #RRGGBB or #AARRGGBB"));
             return 0;
         }
         StrayArmorConfig cfg = StrayArmorConfigManager.config();
