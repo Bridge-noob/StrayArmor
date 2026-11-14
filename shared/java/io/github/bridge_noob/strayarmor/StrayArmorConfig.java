@@ -53,16 +53,44 @@ public class StrayArmorConfig {
     public static final int CURRENT_VERSION = 6;
 
     /**
-     * Normalizes a color field: adds the missing {@code #} and upper-cases it.
-     * Empty or blank means "no tint". Returns {@code null} when the value is
-     * not a valid {@code #RRGGBB} / {@code #AARRGGBB} color.
+     * Normalizes a color field: accepts {@code #RRGGBB} / {@code #AARRGGBB} hex or a
+     * comma-separated RGB triple such as {@code 255,0,0} (values may be floats in
+     * 0..1 or numbers in 0..255). Returns {@code null} when the value is invalid.
+     * Returns an empty string for "no tint".
      */
     public static String normalizeColor(String value) {
         if (value == null) return "";
         String v = value.trim();
         if (v.isEmpty()) return "";
+        if (v.contains(",")) {
+            String[] parts = v.split(",", -1);
+            if (parts.length < 3) return null;
+            float r = parseColorChannel(parts[0]);
+            float g = parseColorChannel(parts[1]);
+            float b = parseColorChannel(parts[2]);
+            if (r < 0f || g < 0f || b < 0f) return null;
+            int rr = clampColorChannel(r);
+            int gg = clampColorChannel(g);
+            int bb = clampColorChannel(b);
+            return String.format("#%02X%02X%02X", rr, gg, bb);
+        }
         if (!v.startsWith("#")) v = "#" + v;
         if (!v.matches("^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$")) return null;
         return v.toUpperCase(Locale.ROOT);
+    }
+
+    private static float parseColorChannel(String part) {
+        try {
+            return Float.parseFloat(part.trim());
+        } catch (NumberFormatException e) {
+            return -1f;
+        }
+    }
+
+    private static int clampColorChannel(float f) {
+        if (Float.isNaN(f) || f < 0f) return 0;
+        float scaled = f <= 1f ? f * 255f : f;
+        if (scaled > 255f) scaled = 255f;
+        return (int) Math.round(scaled);
     }
 }
